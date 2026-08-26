@@ -41,3 +41,10 @@ dependencies:
     condition: please-scan-register.enabled
     repository: "https://charts.visonneau.fr/"
     version: "0.0.14"
+
+  ### Please Scan Verify ###
+  - name: "generic-app"
+    alias: please-scan-verify
+    condition: please-scan-verify.enabled
+    repository: "https://charts.visonneau.fr/"
+    version: "0.0.14"

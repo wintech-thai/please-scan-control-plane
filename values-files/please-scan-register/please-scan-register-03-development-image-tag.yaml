@@ -2,4 +2,4 @@
 please-scan-register:
   pods:
     image:
-      tag: "main-7e83f5f"
+      tag: "main-6b67e3b"
