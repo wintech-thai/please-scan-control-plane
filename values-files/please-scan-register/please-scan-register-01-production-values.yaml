@@ -21,7 +21,7 @@ please-scan-register:
         value: "production"
 
       - name: NEXT_PUBLIC_API_URL
-        value: 'https://api.please-scan.com'
+        value: 'http://please-scan-prod-onix-api'
 
       - name: LOG_ENDPOINT
         value: "http://logstash-http.logstash-soc.svc.cluster.local:8080"
