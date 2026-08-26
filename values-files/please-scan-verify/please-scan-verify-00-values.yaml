@@ -29,7 +29,7 @@ please-scan-verify:
       periodSeconds: 10
 
     image:
-      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/onix-v2/onix-v2-web-scan
+      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/please-scan/please-scan-verify
 
   service:
     enabled: true
