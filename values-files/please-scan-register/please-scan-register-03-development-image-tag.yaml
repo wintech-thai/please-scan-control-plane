@@ -1,0 +1,5 @@
+
+please-scan-register:
+  pods:
+    image:
+      tag: "main-7e83f5f"
