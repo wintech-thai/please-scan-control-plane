@@ -15,7 +15,7 @@ spec:
       labels:
         app.kubernetes.io/name: job-dispatcher
     spec:
-      serviceAccountName: please-erp-sa
+      serviceAccountName: please-scan-sa
       containers:
       # GCS file download
       - env:
