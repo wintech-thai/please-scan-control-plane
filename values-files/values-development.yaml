@@ -1,0 +1,12 @@
+---
+envAlias: development
+envAliasJob: Development
+envGroup: dev
+
+domainOnixScanAPI: api-dev.please-scan.local
+pleaseScanAdminDomain: admin-dev.please-scan.local
+pleaseScanTenantDomain: tenant-dev.please-scan.local
+pleaseScanWebDomain: web-dev.please-scan.local
+
+pgDiskSize: 30Gi
+pgHost: postgresql-onix-v2

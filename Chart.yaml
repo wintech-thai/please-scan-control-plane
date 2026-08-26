@@ -1,0 +1,29 @@
+apiVersion: v2
+name: helm-onix
+description: A Helm chart for Please Scan
+
+type: application
+version: 1.0.0
+appVersion: "1.0"
+
+dependencies:
+
+  ### PostgreSQL V2 ###
+  - name: "postgresql-v2"
+    alias: postgresql-v2
+    condition: postgresql-v2.enabled
+    version: "1.0.0"
+
+  ### Redis ###
+  - name: "redis"
+    alias: redis
+    condition: redis.enabled
+    repository: "https://charts.bitnami.com/bitnami"
+    version: "18.13.0"
+
+  ### Onix API ###
+  - name: "generic-app"
+    alias: onix-api
+    condition: onix-api.enabled
+    repository: "https://charts.visonneau.fr/"
+    version: "0.0.14"
