@@ -1,0 +1,40 @@
+
+please-scan-verify:
+  enabled: true
+  nameOverride: verify
+
+  ingress:
+    enabled: false
+
+  podDisruptionBudget:
+    enabled: false
+
+  pods:
+    controller: deployment
+
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: 5000
+      initialDelaySeconds: 20
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 2
+
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 5000
+      initialDelaySeconds: 20
+      periodSeconds: 10
+
+    image:
+      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/onix-v2/onix-v2-web-scan
+
+  service:
+    enabled: true
+    ports:
+      - port: 80
+        targetPort: 5000
+        protocol: TCP
+        name: http

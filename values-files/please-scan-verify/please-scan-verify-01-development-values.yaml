@@ -1,0 +1,56 @@
+please-scan-verify:
+  pods:
+    replicas: 1
+
+    resources:
+      limits:
+        cpu: 300m
+        memory: 350Mi
+      requests:
+        cpu: 150m
+        memory: 100Mi
+
+    env:
+      - name: DUMMY
+        value: "001"
+
+      - name: TZ
+        value: "Asia/Bangkok"
+
+      - name: REDIS_HOST
+        value: "redis-master"
+
+      - name: REDIS_PORT
+        value: "6379"
+
+      - name: ENCRYPTION_KEY
+        valueFrom:
+          secretKeyRef:
+            name: scan-item-secret
+            key: ENCRYPTION_KEY
+            optional: false
+
+      - name: ENCRYPTION_IV
+        valueFrom:
+          secretKeyRef:
+            name: scan-item-secret
+            key: ENCRYPTION_IV
+            optional: false
+
+      - name: ASPNETCORE_ENVIRONMENT #Soon to be removed
+        value: "Development"
+
+      - name: NODE_ENV
+        value: "development"
+
+      - name: RUNTIME_ENV
+        value: "development"
+
+      - name: LOG_ENDPOINT
+        value: "http://logstash-http.logstash-soc.svc.cluster.local:8080"
+
+      - name: NEXT_PUBLIC_LOG_ENDPOINT
+        value: "http://logstash-http.logstash-soc.svc.cluster.local:8080"
+
+      - name: NEXT_PUBLIC_API_URL
+        value: 'http://please-scan-prod-onix-api'

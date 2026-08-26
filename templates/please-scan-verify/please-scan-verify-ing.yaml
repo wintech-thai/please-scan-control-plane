@@ -1,0 +1,67 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: please-scan-verify-ing
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.org/client-max-body-size: 50m
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - {{ .Values.onixWebScanDomain }}
+  rules:
+    - host: {{ .Values.onixWebScanDomain }}
+      http:
+        paths:
+          - path: /{{ .Values.pleaseScanVerifyDomain }}
+            pathType: Prefix
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-verify
+                port:
+                  number: 80
+    - host: {{ .Values.onixWebScanDomain }}
+      http:
+        paths:
+          - path: /{{ .Values.pleaseScanVerifyDomain }} # for static asset
+            pathType: Prefix
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-verify
+                port:
+                  number: 80
+
+    - host: {{ .Values.pleaseScanVerifyDomain }}
+      http:
+        paths:
+          - path: /_next # for static asset
+            pathType: Prefix
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-verify
+                port:
+                  number: 80
+
+    - host: {{ .Values.pleaseScanVerifyDomain }}
+      http:
+        paths:
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-verify
+                port:
+                  number: 80
+
+    - host: {{ .Values.pleaseScanVerifyDomain }}
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-verify
+                port:
+                  number: 80
