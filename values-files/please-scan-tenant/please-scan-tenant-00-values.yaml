@@ -1,7 +1,7 @@
 
 please-scan-tenant:
   enabled: true
-  nameOverride: please-scan-tenant
+  nameOverride: tenant
 
   ingress:
     enabled: false

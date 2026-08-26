@@ -19,6 +19,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: please-scan-{{ .Values.envGroup }}-please-scan-tenant
+                name: please-scan-{{ .Values.envGroup }}-tenant
                 port:
                   number: 80
