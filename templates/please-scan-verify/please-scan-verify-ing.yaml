@@ -10,9 +10,9 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-      - {{ .Values.onixWebScanDomain }}
+      - {{ .Values.pleaseScanVerifyDomain }}
   rules:
-    - host: {{ .Values.onixWebScanDomain }}
+    - host: {{ .Values.pleaseScanVerifyDomain }}
       http:
         paths:
           - path: /{{ .Values.pleaseScanVerifyDomain }}
@@ -22,7 +22,7 @@ spec:
                 name: please-scan-{{ .Values.envGroup }}-verify
                 port:
                   number: 80
-    - host: {{ .Values.onixWebScanDomain }}
+    - host: {{ .Values.pleaseScanVerifyDomain }}
       http:
         paths:
           - path: /{{ .Values.pleaseScanVerifyDomain }} # for static asset

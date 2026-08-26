@@ -2,4 +2,4 @@
 please-scan-verify:
   pods:
     image:
-      tag: "main-e60fa79"
+      tag: "develop-0543ede"
