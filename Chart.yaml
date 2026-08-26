@@ -27,3 +27,10 @@ dependencies:
     condition: onix-api.enabled
     repository: "https://charts.visonneau.fr/"
     version: "0.0.14"
+
+  ### Please Scan Tenant ###
+  - name: "generic-app"
+    alias: please-scan-tenant
+    condition: please-scan-tenant.enabled
+    repository: "https://charts.visonneau.fr/"
+    version: "0.0.14"

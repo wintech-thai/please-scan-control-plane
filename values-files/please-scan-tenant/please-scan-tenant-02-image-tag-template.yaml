@@ -1,0 +1,5 @@
+
+please-scan-tenant:
+  pods:
+    image:
+      tag: "<<image-tag>>"

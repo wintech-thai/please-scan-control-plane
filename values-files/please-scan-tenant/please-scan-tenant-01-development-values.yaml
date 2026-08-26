@@ -1,0 +1,47 @@
+please-scan-tenant:
+  pods:
+    replicas: 1
+
+    resources:
+      limits:
+        cpu: 200m
+        memory: 350Mi
+      requests:
+        cpu: 150m
+        memory: 100Mi
+
+    env:
+      - name: ENV_GROUP
+        value: 'dev'
+
+      - name: ENV_RUN
+        value: 'Development'
+
+      - name: NODE_ENV
+        value: 'Development'
+
+      - name: NEXT_PUBLIC_API_URL
+        value: 'http://please-scan-dev-onix-api'
+
+      - name: NEXT_PUBLIC_PROVIDER_URL
+        value: 'https://web-dev.dev-hubs.com'
+
+      - name: ES_USER
+        valueFrom:
+          secretKeyRef:
+            name: es-user1
+            key: ES_USER
+            optional: false
+
+      - name: ES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: es-user1
+            key: ES_PASSWORD
+            optional: false
+
+      - name: ES_URL
+        value: 'https://es-analytic-es-http.elasticsearch.svc.cluster.local:9200'
+
+      - name: ES_INDEX_PATTERN
+        value: 'onix-v2-*'
