@@ -2,4 +2,4 @@
 please-scan-tenant:
   pods:
     image:
-      tag: "v1.0.16"
+      tag: "main-6c239c8"
