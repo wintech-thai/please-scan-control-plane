@@ -1,0 +1,75 @@
+onix-api:
+  pods:
+    replicas: 1
+
+    resources:
+      limits:
+        cpu: 300m
+        memory: 350Mi
+      requests:
+        cpu: 150m
+        memory: 100Mi
+
+    env:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: '/secrets/sa.json'
+
+
+      - name: STORAGE_BUCKET
+        value: 'please-scan-artifacts'
+
+      - name: ScanItem__RedirectUrl
+        value: "https://verify.please-scan.com/verify"
+
+      - name: ScanItem__SymmetricKey
+        valueFrom:
+          secretKeyRef:
+            name: scan-item-secret
+            key: ENCRYPTION_KEY
+            optional: false
+
+      - name: ScanItem__EncryptionIv
+        valueFrom:
+          secretKeyRef:
+            name: scan-item-secret
+            key: ENCRYPTION_IV
+            optional: false
+
+
+      - name: ENV_GROUP
+        value: 'prod'
+
+      # To solve ulimit(128) issue
+      - name: DOTNET_USE_POLLING_FILE_WATCHER
+        value: "true"
+
+      - name: ASPNETCORE_ENVIRONMENT
+        value: "Production"
+
+      - name: IsDev
+        value: "false"
+
+      - name: PostgreSQL__Host
+        value: "postgresql-onix-v2"
+
+      - name: PostgreSQL__Database
+        value: "onix"
+
+      - name: PostgreSQL__User
+        value: "postgres"
+
+      - name: PostgreSQL__Password
+        valueFrom:
+          secretKeyRef:
+            name: onix-postgres-secret 
+            key: adminPasswordKey
+            optional: false
+
+      - name: Redis__Host
+        value: "redis-master"
+
+      - name: Redis__Port
+        value: "6379"
+
+      - name: IS_NATIVE_IDP
+        value: "true"
