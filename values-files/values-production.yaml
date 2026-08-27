@@ -10,6 +10,7 @@ pleaseScanTenantDomain: tenant-prod.please-scan.local
 pleaseScanWebDomain: web-prod.please-scan.local
 pleaseScanRegisterDomain: register-prod.please-scan.local
 pleaseScanVerifyDomain: verify-prod.please-scan.local
+pleaseScanMemberDomain: member-prod.please-scan.local
 
 pgDiskSize: 100Gi
 pgHost: postgresql-onix-v2

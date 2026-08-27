@@ -1,0 +1,5 @@
+
+please-scan-member:
+  pods:
+    image:
+      tag: "v0.0.1"
