@@ -21,7 +21,7 @@ please-scan-member:
         value: 'Development'
 
       - name: NEXT_PUBLIC_API_URL
-        value: 'https://api-dev.please-scan.com'
+        value: 'http://please-scan-dev-onix-api'
 
       - name: NEXT_PUBLIC_PROVIDER_URL
         value: 'https://web-dev.dev-hubs.com'

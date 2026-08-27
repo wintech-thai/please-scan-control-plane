@@ -28,7 +28,7 @@ please-scan-member:
     #  periodSeconds: 10
 
     image:
-      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/onix-v2/onix-member
+      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/please-scan/please-scan-member
 
     volumeMounts:
       - name: secrets
