@@ -2,4 +2,4 @@
 please-scan-member:
   pods:
     image:
-      tag: "main-92673ff"
+      tag: "develop-75fc624"
