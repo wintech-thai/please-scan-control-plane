@@ -1,0 +1,38 @@
+
+please-scan-admin:
+  # เปิดเป็น true ตอนที่ CI/CD build+push image please-scan-admin สำเร็จอย่างน้อย 1 ครั้งแล้วเท่านั้น
+  # ไม่งั้น ArgoCD จะพยายาม deploy image tag ที่ยังไม่มีจริง (ImagePullBackOff)
+  enabled: false
+  nameOverride: admin
+
+  ingress:
+    enabled: false
+
+  podDisruptionBudget:
+    enabled: false
+
+  pods:
+    controller: deployment
+
+    image:
+      # build แยกจาก please-scan-tenant (คนละ NEXT_PUBLIC_WEB_ROLE ที่ build-time)
+      # แต่มาจาก repo/Dockerfile เดียวกัน (please-scan-tenant)
+      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/please-scan/please-scan-admin
+
+    volumeMounts:
+      - name: secrets
+        mountPath: "/secrets"
+        readOnly: true
+
+    volumes:
+      - name: secrets
+        secret:
+          secretName: gcp-sa-secret
+
+  service:
+    enabled: true
+    ports:
+      - port: 80
+        targetPort: 3000
+        protocol: TCP
+        name: http
