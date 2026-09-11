@@ -1,8 +1,7 @@
 
 please-scan-admin:
-  # เปิดเป็น true ตอนที่ CI/CD build+push image please-scan-admin สำเร็จอย่างน้อย 1 ครั้งแล้วเท่านั้น
-  # ไม่งั้น ArgoCD จะพยายาม deploy image tag ที่ยังไม่มีจริง (ImagePullBackOff)
-  enabled: false
+  # CI/CD build+push image please-scan-admin สำเร็จแล้ว (tag: develop-1c14b6e) เปิดใช้งานได้
+  enabled: true
   nameOverride: admin
 
   ingress:
