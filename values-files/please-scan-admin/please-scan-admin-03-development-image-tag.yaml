@@ -2,4 +2,4 @@
 please-scan-admin:
   pods:
     image:
-      tag: "pending-first-build"
+      tag: "develop-8c1afef"
