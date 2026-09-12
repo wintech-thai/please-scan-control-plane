@@ -16,7 +16,8 @@ please-scan-admin:
     image:
       # build แยกจาก please-scan-tenant (คนละ NEXT_PUBLIC_WEB_ROLE ที่ build-time)
       # แต่มาจาก repo/Dockerfile เดียวกัน (please-scan-tenant)
-      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/please-scan/please-scan-admin
+      # public repo, ไม่ต้องตั้ง imagePullSecrets
+      name: pjamenaja/please-scan-admin
 
     volumeMounts:
       - name: secrets

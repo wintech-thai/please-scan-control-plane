@@ -28,7 +28,8 @@ onix-api:
       periodSeconds: 10
 
     image:
-      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/onix-v2/onix-api
+      # public repo, ไม่ต้องตั้ง imagePullSecrets
+      name: pjamenaja/onix-v2-api
 
     volumeMounts:
       - name: secrets
