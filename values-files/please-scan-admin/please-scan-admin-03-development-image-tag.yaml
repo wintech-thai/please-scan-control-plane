@@ -2,4 +2,4 @@
 please-scan-admin:
   pods:
     image:
-      tag: "develop-563ad34"
+      tag: "develop-648dd98"
