@@ -2,4 +2,4 @@
 please-scan-tenant:
   pods:
     image:
-      tag: "develop-1c14b6e"
+      tag: "develop-563ad34"
