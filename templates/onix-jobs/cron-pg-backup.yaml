@@ -4,7 +4,7 @@ kind: CronJob
 metadata:
   name: pg-backup
 spec:
-  # kubectl create job --from=cronjob/pg-backup pg-backup -n onix-v2-production
+  # kubectl create job --from=cronjob/pg-backup pg-backup -n please-scan-development
   suspend: {{ .Values.backupAdsSuspend }}
   schedule: "0 */12 * * *" # Every 12 hours
   jobTemplate:
@@ -12,7 +12,7 @@ spec:
       ttlSecondsAfterFinished: 3600
       template:
         spec:
-          serviceAccountName: onix-sa
+          serviceAccountName: please-scan-sa
           containers:
           - name: cron-script
             image: "pjamenaja/onix-v2-jobs:{{ .Values.onixJobs.imageTag }}"
