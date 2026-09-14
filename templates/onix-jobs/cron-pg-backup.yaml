@@ -1,0 +1,65 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pg-backup
+spec:
+  # kubectl create job --from=cronjob/pg-backup pg-backup -n onix-v2-production
+  suspend: {{ .Values.backupAdsSuspend }}
+  schedule: "0 */12 * * *" # Every 12 hours
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          serviceAccountName: onix-sa
+          containers:
+          - name: cron-script
+            image: "pjamenaja/onix-v2-jobs:{{ .Values.onixJobs.imageTag }}"
+            imagePullPolicy: IfNotPresent
+            command:
+            - bash
+            args:
+            - /scripts/backup-postgres-db.bash
+            env:
+            - name: BACKUP_NAME_PREFIX
+              value: "pg"
+
+            - name: EXCLUDE_FLAG
+              value: "YES"
+
+            - name: EXTENSION
+              value: "onix-v2-{{ .Values.envAlias }}"
+
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/sa.json
+
+            - name: PG_USER
+              value: "postgres"
+
+            - name: TARGET_NS
+              value: "please-scan-{{ .Values.envAlias }}"
+
+            - name: TARGET_POD
+              value: "postgresql-onix-v2-0"
+
+            - name: GCS_FOLDER
+              value: "db-backup-please-scan/{{ .Values.envAlias }}"
+
+            volumeMounts:
+            - name: temp-dir
+              mountPath: /data/temp
+
+            - name: secrets
+              readOnly: true
+              mountPath: "/secrets"
+
+          restartPolicy: OnFailure
+
+          volumes:
+          - name: temp-dir
+            emptyDir: {}
+
+          - name: secrets
+            secret:
+              secretName: gcp-sa-secret
