@@ -2,4 +2,4 @@
 please-scan-admin:
   pods:
     image:
-      tag: "pending-first-build"
+      tag: "v1.0.18"
