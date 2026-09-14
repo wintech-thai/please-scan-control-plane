@@ -15,7 +15,7 @@ spec:
     - host: {{ .Values.pleaseScanVerifyDomain }}
       http:
         paths:
-          - path: /{{ .Values.pleaseScanVerifyDomain }}
+          - path: /{{ .Values.onixWebScanPath }}
             pathType: Prefix
             backend:
               service:
@@ -25,7 +25,7 @@ spec:
     - host: {{ .Values.pleaseScanVerifyDomain }}
       http:
         paths:
-          - path: /{{ .Values.pleaseScanVerifyDomain }} # for static asset
+          - path: /{{ .Values.onixWebScanStaticPath }} # for static asset
             pathType: Prefix
             backend:
               service:

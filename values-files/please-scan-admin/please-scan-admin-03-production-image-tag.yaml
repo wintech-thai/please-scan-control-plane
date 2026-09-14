@@ -1,0 +1,5 @@
+
+please-scan-admin:
+  pods:
+    image:
+      tag: "pending-first-build"

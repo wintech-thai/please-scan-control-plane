@@ -1,0 +1,70 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cache-loader
+spec:
+  # kubectl create job --from=cronjob/cache-loader cache-loader-001 -n onix-v2-production
+  suspend: false
+  schedule: "1 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          containers:
+          - name: cron-script
+            image: "pjamenaja/onix-v2-jobs:{{ .Values.onixJobs.imageTag }}"
+            imagePullPolicy: IfNotPresent
+            command:
+            - ruby
+            args:
+            - /scripts/cache-loader.rb
+            env:
+            - name: ENVIRONMENT 
+              value: {{ .Values.envAliasJob }}
+
+            - name: TZ
+              value: "Asia/Bangkok"
+
+            - name: PG_HOST
+              value: {{ .Values.pgHost }}
+
+            - name: PG_PORT
+              value: "5432"
+
+            - name: PG_USER
+              value: "postgres"
+
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: onix-postgres-secret
+                  key: adminPasswordKey
+                  optional: false
+
+            - name: PG_DB
+              value: "onix"
+
+            - name: REDIS_HOST
+              value: "redis-master"
+
+            - name: REDIS_PORT
+              value: "6379"
+
+            volumeMounts:
+            - name: temp-dir
+              mountPath: /data/temp
+
+            #- name: secrets
+            #  readOnly: true
+            #  mountPath: "/secrets"
+
+          restartPolicy: OnFailure
+
+          volumes:
+          - name: temp-dir
+            emptyDir: {}
+
+          #- name: secrets
+          #  secret:
+          #    secretName: gcp-sa-secret

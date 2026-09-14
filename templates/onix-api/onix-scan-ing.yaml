@@ -1,0 +1,69 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: please-scan-api-ing
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.org/client-max-body-size: 50m
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - {{ .Values.domainOnixScan }}
+  rules:
+    - host: {{ .Values.domainOnixScan }}
+      http:
+        paths:
+          - path: /health
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-onix-api
+                port:
+                  number: 80
+  
+    # domain ที่อยู่ที่หน้า sticker QR code
+    - host: {{ .Values.domainOnixScan }}
+      http:
+        paths:
+          - path: /org/.+/.+/.+
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-onix-api
+                port:
+                  number: 80
+
+    # API ปกติ
+    - host: {{ .Values.domainOnixScanAPI }}
+      http:
+        paths:
+          - path: /api/.+/org/.+
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-onix-api
+                port:
+                  number: 80
+    - host: {{ .Values.domainOnixScanAPI }}
+      http:
+        paths:
+          - path: /health
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-onix-api
+                port:
+                  number: 80
+    - host: {{ .Values.domainOnixScanAPI }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: please-scan-{{ .Values.envGroup }}-onix-api
+                port:
+                  number: 80

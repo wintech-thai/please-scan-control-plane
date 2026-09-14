@@ -35,6 +35,14 @@ dependencies:
     repository: "https://charts.visonneau.fr/"
     version: "0.0.14"
 
+  ### Please Scan Admin (platform-admin console, same repo/image family as tenant,
+  ### built with NEXT_PUBLIC_WEB_ROLE=ADMIN as a separate image) ###
+  - name: "generic-app"
+    alias: please-scan-admin
+    condition: please-scan-admin.enabled
+    repository: "https://charts.visonneau.fr/"
+    version: "0.0.14"
+
   ### Please Scan Register ###
   - name: "generic-app"
     alias: please-scan-register

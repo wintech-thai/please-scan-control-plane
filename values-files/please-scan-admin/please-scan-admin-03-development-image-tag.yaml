@@ -1,5 +1,5 @@
 
-please-scan-tenant:
+please-scan-admin:
   pods:
     image:
       tag: "develop-44c85a3"

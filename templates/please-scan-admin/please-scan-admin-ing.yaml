@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: onix-api-ing
+  name: please-scan-admin-ing
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
@@ -10,15 +10,15 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-      - {{ .Values.domainOnixScanAPI }}
+      - {{ .Values.pleaseScanAdminDomain }}
   rules:
-    - host: {{ .Values.domainOnixScanAPI }}
+    - host: {{ .Values.pleaseScanAdminDomain }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: please-scan-{{ .Values.envGroup }}-onix-api
+                name: please-scan-{{ .Values.envGroup }}-admin
                 port:
                   number: 80
