@@ -21,7 +21,7 @@ spec:
             - /scripts/scan-item-generator.rb
             env:
             - name: PG_HOST
-              value: postgresql-onix
+              value: {{ .Values.pgHost }}
 
             - name: PG_PORT
               value: "5432"
