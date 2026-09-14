@@ -1,0 +1,97 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scan-item-generator
+spec:
+  # kubectl create job --from=cronjob/scan-item-generator scan-item-generator-001 -n onix-v2-production
+  suspend: true
+  schedule: "1 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          containers:
+          - name: cron-script
+            image: "pjamenaja/onix-v2-jobs:{{ .Values.onixJobs.imageTag }}"
+            imagePullPolicy: IfNotPresent
+            command:
+            - ruby
+            args:
+            - /scripts/scan-item-generator.rb
+            env:
+            - name: PG_HOST
+              value: postgresql-onix
+
+            - name: PG_PORT
+              value: "5432"
+
+            - name: PG_USER
+              value: "postgres"
+
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: onix-postgres-secret
+                  key: adminPasswordKey
+                  optional: false
+
+            - name: PG_DB
+              value: "onix"
+
+            - name: SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secret
+                  key: SMTP_USER
+                  optional: false
+
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secret
+                  key: SMTP_PASSWORD
+                  optional: false
+
+
+            - name: SCAN_ITEM_ORG
+              value: "{{ .Values.onixJobs.scanItemOrg }}"
+
+            - name: SCAN_ITEM_BUCKET
+              value: "{{ .Values.onixJobs.scanItemBucket }}"
+
+            - name: SCAN_ITEM_COUNT
+              value: "{{ .Values.onixJobs.scanItemCount }}"
+
+            - name: SCAN_ITEM_URL
+              value: "{{ .Values.onixJobs.scanItemUrl }}"
+
+            - name: SCAN_ITEM_GCS_PROJECT
+              value: 'nap-devops-prod'
+
+            - name: SCAN_ITEM_GROUP
+              value: '{{ .Values.envGroup }}/ScanItems'
+
+            - name: TEMP_DIR
+              value: '/data/temp'
+
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: '/secrets/sa.json'
+
+            volumeMounts:
+            - name: temp-dir
+              mountPath: /data/temp
+
+            - name: secrets
+              readOnly: true
+              mountPath: "/secrets"
+
+          restartPolicy: OnFailure
+
+          volumes:
+          - name: temp-dir
+            emptyDir: {}
+
+          - name: secrets
+            secret:
+              secretName: gcp-sa-secret

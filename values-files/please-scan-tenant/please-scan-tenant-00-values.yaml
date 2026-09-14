@@ -28,7 +28,7 @@ please-scan-tenant:
     #  periodSeconds: 10
 
     image:
-      name: asia-southeast1-docker.pkg.dev/its-artifact-commons/please-scan/please-scan-tenant
+      name: pjamenaja/please-scan-tenant
 
     volumeMounts:
       - name: secrets
