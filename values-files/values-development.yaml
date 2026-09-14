@@ -3,6 +3,9 @@ envAlias: development
 envAliasJob: Development
 envGroup: dev
 
+onixWebScanPath: verify
+onixWebScanStaticPath: scan-static
+
 domainOnixScanAPI: api-dev.please-scan.local
 domainOnixScan: scan-dev.please-scan.local
 pleaseScanAdminDomain: admin-dev.please-scan.local

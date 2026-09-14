@@ -1,8 +1,10 @@
 ---
 envAlias: production
 envAliasJob: Production
-
 envGroup: prod
+
+onixWebScanPath: verify
+onixWebScanStaticPath: scan-static
 
 domainOnixScanAPI: api-prod.please-scan.local
 domainOnixScan: scan-prod.please-scan.local
