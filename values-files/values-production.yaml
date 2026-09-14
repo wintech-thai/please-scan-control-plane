@@ -5,6 +5,7 @@ envAliasJob: Production
 envGroup: prod
 
 domainOnixScanAPI: api-prod.please-scan.local
+domainOnixScan: scan-prod.please-scan.local
 pleaseScanAdminDomain: admin-prod.please-scan.local
 pleaseScanTenantDomain: tenant-prod.please-scan.local
 pleaseScanWebDomain: web-prod.please-scan.local

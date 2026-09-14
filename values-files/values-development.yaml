@@ -4,6 +4,7 @@ envAliasJob: Development
 envGroup: dev
 
 domainOnixScanAPI: api-dev.please-scan.local
+domainOnixScan: scan-dev.please-scan.local
 pleaseScanAdminDomain: admin-dev.please-scan.local
 pleaseScanTenantDomain: tenant-dev.please-scan.local
 pleaseScanWebDomain: web-dev.please-scan.local
