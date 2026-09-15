@@ -23,8 +23,8 @@ please-scan-register:
       - name: NEXT_PUBLIC_API_URL
         value: 'http://please-scan-dev-onix-api'
 
-      - name: LOG_ENDPOINT
-        value: "http://logstash-http.logstash-soc.svc.cluster.local:8080"
+      - name: REDIS_HOST
+        value: "redis-master"
 
-      - name: NEXT_PUBLIC_LOG_ENDPOINT
-        value: "http://logstash-http.logstash-soc.svc.cluster.local:8080"
+      - name: REDIS_PORT
+        value: "6379"
