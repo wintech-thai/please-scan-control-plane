@@ -2,4 +2,4 @@
 please-scan-admin:
   pods:
     image:
-      tag: "develop-7fd6148"
+      tag: "main-f64afa2"
