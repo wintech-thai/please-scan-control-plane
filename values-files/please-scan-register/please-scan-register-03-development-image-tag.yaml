@@ -2,4 +2,4 @@
 please-scan-register:
   pods:
     image:
-      tag: "develop-07a4523"
+      tag: "main-8781517"
