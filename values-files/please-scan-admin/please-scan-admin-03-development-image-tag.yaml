@@ -2,4 +2,4 @@
 please-scan-admin:
   pods:
     image:
-      tag: "main-b5784a7"
+      tag: "develop-c587f68"
