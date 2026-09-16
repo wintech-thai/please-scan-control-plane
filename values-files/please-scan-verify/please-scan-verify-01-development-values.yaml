@@ -46,11 +46,5 @@ please-scan-verify:
       - name: RUNTIME_ENV
         value: "development"
 
-      - name: LOG_ENDPOINT
-        value: "http://logstash-http.logstash-soc.svc.cluster.local:8080"
-
-      - name: NEXT_PUBLIC_LOG_ENDPOINT
-        value: "http://logstash-http.logstash-soc.svc.cluster.local:8080"
-
       - name: NEXT_PUBLIC_API_URL
         value: 'http://please-scan-prod-onix-api'

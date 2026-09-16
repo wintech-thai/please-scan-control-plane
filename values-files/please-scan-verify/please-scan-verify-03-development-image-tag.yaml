@@ -2,4 +2,4 @@
 please-scan-verify:
   pods:
     image:
-      tag: "main-5072982"
+      tag: "develop-3e0228e"
