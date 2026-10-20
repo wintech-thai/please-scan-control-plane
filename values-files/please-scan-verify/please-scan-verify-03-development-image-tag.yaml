@@ -2,4 +2,4 @@
 please-scan-verify:
   pods:
     image:
-      tag: "main-d10b296"
+      tag: "main-6614177"
