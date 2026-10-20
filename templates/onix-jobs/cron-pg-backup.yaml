@@ -1,65 +1,63 @@
 ---
+# x088: PostgreSQL-only backup (Please Scan has no app pod to archive, only the
+# postgresql-onix-v2 pod to dump) — replaces the old GCS-based version of this
+# file, now using the same S3-based app-backup.rb pattern as the SnipeIt/WordPress
+# backups (onix-v2-jobs/scripts-ruby/app-backup.rb). No APP_DATA_PATH is set below,
+# which puts the script in DB-only mode (skips the app-pod archive step entirely).
+# No restore CronJob — not requested for Please Scan.
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: pg-backup
 spec:
-  # kubectl create job --from=cronjob/pg-backup pg-backup -n please-scan-development
-  suspend: {{ .Values.backupAdsSuspend }}
-  schedule: "0 */12 * * *" # Every 12 hours
+  # Run on demand for testing: kubectl create job --from=cronjob/pg-backup pg-backup-manual -n please-scan-{{ .Values.envAlias }}
+  suspend: {{ .Values.onixJobs.pgBackupSuspend | default false }}
+  schedule: "0 2 * * *" # daily 02:00
+  timeZone: "Asia/Bangkok"
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 3600
       template:
         spec:
           serviceAccountName: please-scan-sa
+          restartPolicy: OnFailure
           containers:
-          - name: cron-script
+          - name: app-backup
             image: "pjamenaja/onix-v2-jobs:{{ .Values.onixJobs.imageTag }}"
             imagePullPolicy: IfNotPresent
-            command:
-            - bash
-            args:
-            - /scripts/backup-postgres-db.bash
+            command: ["ruby"]
+            args: ["app-backup.rb"]
             env:
-            - name: BACKUP_NAME_PREFIX
-              value: "pg"
-
-            - name: EXCLUDE_FLAG
-              value: "YES"
-
-            - name: EXTENSION
-              value: "onix-v2-{{ .Values.envAlias }}"
-
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /secrets/sa.json
-
-            - name: PG_USER
-              value: "postgres"
-
-            - name: TARGET_NS
+            - name: DB_TYPE
+              value: "postgresql"
+            - name: DB_NAMESPACE
               value: "please-scan-{{ .Values.envAlias }}"
-
-            - name: TARGET_POD
+            - name: DB_POD_NAME
               value: "postgresql-onix-v2-0"
 
-            - name: GCS_FOLDER
-              value: "db-backup-please-scan/{{ .Values.envAlias }}"
+            - name: S3_STORAGE_URL
+              value: "https://storage.googleapis.com"
+            - name: S3_BUCKET
+              value: "please-scan-backup"
+            - name: S3_BUCKET_PATH
+              value: "{{ .Values.envAlias }}"
+            - name: FILE_PREFIX
+              value: "pg-onix-v2-{{ .Values.envGroup }}"
+            - name: S3_TRANSFER_TIMEOUT_SEC
+              value: "3600"
 
-            volumeMounts:
-            - name: temp-dir
-              mountPath: /data/temp
-
-            - name: secrets
-              readOnly: true
-              mountPath: "/secrets"
-
-          restartPolicy: OnFailure
-
-          volumes:
-          - name: temp-dir
-            emptyDir: {}
-
-          - name: secrets
-            secret:
-              secretName: gcp-sa-secret
+            - name: S3_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pg-backup-secret
+                  key: S3_KEY
+            - name: S3_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: pg-backup-secret
+                  key: S3_SECRET
+            - name: DISCORD_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  name: pg-backup-secret
+                  key: DISCORD_WEBHOOK
