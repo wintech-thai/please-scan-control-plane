@@ -2,4 +2,4 @@
 please-scan-register:
   pods:
     image:
-      tag: "main-eb00be3"
+      tag: "develop-c6051cc"
